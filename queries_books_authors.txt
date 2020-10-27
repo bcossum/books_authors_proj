@@ -1,0 +1,58 @@
+>>> from books_authors_app.models import *
+>>> Books.objects.create(title='C Sharp')
+<Books: Books object (1)>
+>>> Books.objects.create(title='Java')
+<Books: Books object (2)>
+>>> Books.objects.create(title='Python')
+<Books: Books object (3)>
+>>> Books.objects.create(title='PHP')
+<Books: Books object (4)>
+>>> Books.objects.create(title='Ruby')
+<Books: Books object (5)>
+>>> Authors.objects.create(first_name='Jane', last_name='Austen')
+<Authors: Authors object (1)>
+>>> Authors.objects.create(first_name='Emily', last_name='Dickinson')
+<Authors: Authors object (2)>
+>>> Authors.objects.create(first_name='Fyodor', last_name='Dostoevsky')
+<Authors: Authors object (3)>
+>>> Authors.objects.create(first_name='William', last_name='Shakespeare')
+<Authors: Authors object (4)>
+>>> Authors.objects.create(first_name='Lao', last_name='Tzu')
+<Authors: Authors object (5)>
+>>> update = Books.objects.get(id=1)
+>>> update.title
+'C Sharp'
+>>> update.title="C#"
+>>> update.save()
+>>> update.title
+'C#'
+>>> update=Authors.objects.get(id=4)
+>>> update.first_name="Bill"
+>>> update.save()
+>>> update.first_name
+'Bill'
+first_author=Authors.objects.first()
+>>> first_author.first_name
+'Jane'
+>>> first_book=Books.objects.first()
+>>> second_book=Books.objects.get(id=2)
+>>> first_author.books.add(first_book, second_book)
+>>> second_author=Authors.objects.get(id=2)
+>>> third_book=Books.objects.get(id=3)
+>>> second_author.books.add(first_book, second_book, third_book)
+>>> fourth_book=Books.objects.get(id=4)
+>>> third_author=Authors.objects.get(id=3)
+>>> third_author.books.add(first_book, second_book, third_book, fourth_book)
+>>> Authors.objects.filter(books=third_book)
+<QuerySet [<Authors: Authors object (2)>, <Authors: Authors object (3)>, <Author
+s: Authors object (4)>]>
+>>> fifth_author=Authors.objects.get(id=5)
+>>> second_book.Authors.add(fifth_author)
+>>> Authors.objects.filter(books=second_book)
+<QuerySet [<Authors: Authors object (1)>, <Authors: Authors object (3)>, <Author
+s: Authors object (4)>, <Authors: Authors object (5)>]>
+>>> Books.objects.filter(Authors=third_author)
+<QuerySet [<Books: Books object (1)>, <Books: Books object (2)>, <Books: Books o
+bject (3)>, <Books: Books object (4)>]>
+>>> Authors.objects.filter(books=fifth_book)
+<QuerySet [<Authors: Authors object (4)>]>
